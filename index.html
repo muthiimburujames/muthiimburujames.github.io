@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Name — Researcher</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Source+Serif+4:ital,opsz,wght@0,8..60,300;0,8..60,400;0,8..60,600;1,8..60,400&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-primary: #0a0a0a;
+      --bg-secondary: #111111;
+      --bg-card: #161616;
+      --bg-card-hover: #1c1c1c;
+      --text-primary: #f0f0f0;
+      --text-secondary: #8a8a8a;
+      --text-muted: #555555;
+      --accent: #FF6B2C;
+      --accent-dim: rgba(255, 107, 44, 0.12);
+      --accent-glow: rgba(255, 107, 44, 0.25);
+      --border: #222222;
+      --border-light: #2a2a2a;
+      --font-display: 'Outfit', sans-serif;
+      --font-body: 'Source Serif 4', Georgia, serif;
+      --max-width: 1200px;
+      --nav-height: 72px;
+    }
+
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      scroll-padding-top: var(--nav-height);
+    }
+
+    body {
+      background: var(--bg-primary);
+      color: var(--text-primary);
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    ::selection {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    a {
+      color: var(--accent);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    a:hover { opacity: 0.8; }
+
+    /* ─── NAV ─── */
+    nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: var(--nav-height);
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom: 1px solid var(--border);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+    }
+    .nav-inner {
+      max-width: var(--max-width);
+      width: 100%;
+      margin: 0 auto;
+      padding: 0 40px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: var(--font-display);
+      font-weight: 700;
+      font-size: 20px;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-links {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      transition: color 0.25s;
+    }
+    .nav-links a:hover { color: var(--text-primary); opacity: 1; }
+
+    .nav-hamburger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 4px;
+    }
+    .nav-hamburger span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text-primary);
+      transition: 0.3s;
+    }
+
+    /* ─── HERO ─── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding: calc(var(--nav-height) + 60px) 40px 80px;
+      position: relative;
+      overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: -200px;
+      right: -200px;
+      width: 600px;
+      height: 600px;
+      background: radial-gradient(circle, var(--accent-glow), transparent 70%);
+      opacity: 0.3;
+      pointer-events: none;
+    }
+    .hero-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      width: 100%;
+      display: grid;
+      grid-template-columns: 1fr 340px;
+      gap: 80px;
+      align-items: center;
+    }
+    .hero-text { animation: fadeUp 0.8s ease both; }
+    .hero-label {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--accent);
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .hero-label::before {
+      content: '';
+      display: block;
+      width: 32px;
+      height: 2px;
+      background: var(--accent);
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(48px, 6vw, 80px);
+      font-weight: 800;
+      line-height: 1.05;
+      letter-spacing: -0.03em;
+      margin-bottom: 28px;
+    }
+    .hero-bio {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 560px;
+      line-height: 1.8;
+    }
+    .hero-bio strong { color: var(--text-primary); font-weight: 600; }
+    .hero-links {
+      display: flex;
+      gap: 12px;
+      margin-top: 36px;
+      flex-wrap: wrap;
+    }
+    .hero-link {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 22px;
+      border: 1px solid var(--border-light);
+      border-radius: 6px;
+      color: var(--text-primary);
+      transition: all 0.25s;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .hero-link:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      color: var(--accent);
+      opacity: 1;
+    }
+    .hero-link.primary {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff;
+    }
+    .hero-link.primary:hover {
+      background: #e85a20;
+      opacity: 1;
+    }
+
+    .hero-photo-wrap {
+      animation: fadeUp 0.8s 0.2s ease both;
+    }
+    .hero-photo {
+      width: 100%;
+      aspect-ratio: 3/4;
+      border-radius: 12px;
+      overflow: hidden;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      position: relative;
+    }
+    .hero-photo img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+    .photo-placeholder {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      gap: 12px;
+      color: var(--text-muted);
+      font-family: var(--font-display);
+      font-size: 14px;
+    }
+    .photo-placeholder svg {
+      opacity: 0.3;
+    }
+
+    /* ─── SECTIONS ─── */
+    section {
+      padding: 100px 40px;
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+    .section-header {
+      margin-bottom: 56px;
+    }
+    .section-label {
+      font-family: var(--font-display);
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: var(--accent);
+      margin-bottom: 16px;
+    }
+    .section-title {
+      font-family: var(--font-display);
+      font-size: clamp(32px, 4vw, 48px);
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      line-height: 1.15;
+    }
+
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      max-width: var(--max-width);
+      margin: 0 auto;
+    }
+
+    /* ─── RESEARCH INTERESTS ─── */
+    .research-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .research-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 36px;
+      transition: all 0.3s ease;
+    }
+    .research-card:hover {
+      border-color: var(--border-light);
+      background: var(--bg-card-hover);
+      transform: translateY(-2px);
+    }
+    .research-card h3 {
+      font-family: var(--font-display);
+      font-size: 20px;
+      font-weight: 600;
+      margin-bottom: 12px;
+      letter-spacing: -0.01em;
+    }
+    .research-card p {
+      color: var(--text-secondary);
+      font-size: 16px;
+      line-height: 1.7;
+    }
+    .research-card .card-number {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--accent);
+      margin-bottom: 20px;
+      display: block;
+    }
+
+    /* ─── PUBLICATIONS ─── */
+    .pub-year {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      padding: 48px 0 20px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 0;
+    }
+    .pub-year:first-child { padding-top: 0; }
+    .pub-item {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.2s;
+    }
+    .pub-item:hover {
+      background: var(--bg-card);
+      margin: 0 -20px;
+      padding: 24px 20px;
+      border-radius: 8px;
+      border-color: transparent;
+    }
+    .pub-title {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      margin-bottom: 6px;
+      letter-spacing: -0.01em;
+      line-height: 1.4;
+    }
+    .pub-authors {
+      font-size: 15px;
+      color: var(--text-secondary);
+      margin-bottom: 8px;
+    }
+    .pub-venue {
+      font-size: 14px;
+      color: var(--text-muted);
+      font-style: italic;
+    }
+    .pub-links {
+      display: flex;
+      gap: 16px;
+      margin-top: 10px;
+    }
+    .pub-links a {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--accent);
+      border: 1px solid var(--border-light);
+      padding: 4px 12px;
+      border-radius: 4px;
+      transition: all 0.2s;
+    }
+    .pub-links a:hover {
+      border-color: var(--accent);
+      background: var(--accent-dim);
+      opacity: 1;
+    }
+
+    /* ─── TEACHING ─── */
+    .teaching-list {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
+    .teaching-item {
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 28px 32px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      transition: all 0.25s;
+    }
+    .teaching-item:hover {
+      border-color: var(--border-light);
+      transform: translateX(4px);
+    }
+    .teaching-semester {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      white-space: nowrap;
+    }
+    .teaching-name {
+      font-family: var(--font-display);
+      font-size: 17px;
+      font-weight: 600;
+      flex: 1;
+    }
+    .teaching-arrow {
+      color: var(--text-muted);
+      font-size: 20px;
+      transition: color 0.2s;
+    }
+    .teaching-item:hover .teaching-arrow { color: var(--accent); }
+
+    /* ─── STUDENTS ─── */
+    .students-group {
+      margin-bottom: 48px;
+    }
+    .students-group-title {
+      font-family: var(--font-display);
+      font-size: 14px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+    .students-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 12px;
+    }
+    .student-item {
+      padding: 16px 20px;
+      background: var(--bg-card);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      transition: all 0.2s;
+    }
+    .student-item:hover {
+      border-color: var(--border-light);
+      background: var(--bg-card-hover);
+    }
+    .student-name {
+      font-family: var(--font-display);
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--text-primary);
+    }
+    .student-note {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-top: 4px;
+    }
+
+    /* ─── NEWS ─── */
+    .news-list {
+      display: flex;
+      flex-direction: column;
+    }
+    .news-item {
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 32px;
+      padding: 28px 0;
+      border-bottom: 1px solid var(--border);
+      align-items: start;
+    }
+    .news-date {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      padding-top: 3px;
+    }
+    .news-content {
+      font-size: 16px;
+      color: var(--text-secondary);
+      line-height: 1.7;
+    }
+    .news-content strong { color: var(--text-primary); }
+
+    /* ─── AWARDS ─── */
+    .awards-strip {
+      display: flex;
+      gap: 16px;
+      margin-top: 40px;
+      flex-wrap: wrap;
+    }
+    .award-tag {
+      font-family: var(--font-display);
+      font-size: 13px;
+      font-weight: 500;
+      padding: 8px 18px;
+      background: var(--accent-dim);
+      border: 1px solid rgba(255,107,44,0.2);
+      border-radius: 100px;
+      color: var(--accent);
+    }
+
+    /* ─── FOOTER ─── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 48px 40px;
+      text-align: center;
+    }
+    .footer-inner {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .footer-text {
+      font-family: var(--font-display);
+      font-size: 14px;
+      color: var(--text-muted);
+    }
+    .footer-links {
+      display: flex;
+      gap: 24px;
+    }
+    .footer-links a {
+      font-family: var(--font-display);
+      font-size: 14px;
+      color: var(--text-secondary);
+    }
+    .footer-links a:hover { color: var(--text-primary); opacity: 1; }
+
+    /* ─── ANIMATIONS ─── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ─── RESPONSIVE ─── */
+    @media (max-width: 900px) {
+      .hero-inner {
+        grid-template-columns: 1fr;
+        gap: 48px;
+      }
+      .hero-photo-wrap {
+        max-width: 280px;
+        order: -1;
+      }
+      .hero-photo { aspect-ratio: 1; }
+      .research-grid { grid-template-columns: 1fr; }
+      .news-item {
+        grid-template-columns: 1fr;
+        gap: 8px;
+      }
+    }
+
+    @media (max-width: 640px) {
+      section { padding: 64px 20px; }
+      .hero { padding: calc(var(--nav-height) + 40px) 20px 60px; }
+      .nav-inner { padding: 0 20px; }
+      .nav-links { display: none; }
+      .nav-hamburger { display: flex; }
+      .nav-links.open {
+        display: flex;
+        flex-direction: column;
+        position: absolute;
+        top: var(--nav-height);
+        left: 0;
+        right: 0;
+        background: var(--bg-primary);
+        border-bottom: 1px solid var(--border);
+        padding: 20px;
+        gap: 16px;
+      }
+      .hero-links { flex-direction: column; }
+      .hero-link { justify-content: center; }
+      .teaching-item {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .footer-inner { flex-direction: column; gap: 16px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══════ NAV ═══════ -->
+  <nav>
+    <div class="nav-inner">
+      <a href="#" class="nav-logo">Your<span>.</span>Name</a>
+      <ul class="nav-links" id="navLinks">
+        <li><a href="#about">About</a></li>
+        <li><a href="#research">Research</a></li>
+        <li><a href="#publications">Publications</a></li>
+        <li><a href="#teaching">Teaching</a></li>
+        <li><a href="#students">Students</a></li>
+        <li><a href="#news">News</a></li>
+      </ul>
+      <button class="nav-hamburger" id="navToggle" aria-label="Toggle menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </nav>
+
+  <!-- ═══════ HERO ═══════ -->
+  <header class="hero" id="about">
+    <div class="hero-inner">
+      <div class="hero-text">
+        <div class="hero-label">Assistant Professor</div>
+        <h1>Your Name</h1>
+        <p class="hero-bio">
+          I am an Assistant Professor at <a href="#">Your University</a> in the
+          <a href="#">Department of Computer Science</a>. Previously, I was a postdoc
+          at <strong>University B</strong> working with
+          <a href="#">Advisor Name</a>, and I obtained my PhD at
+          <strong>University C</strong> advised by <a href="#">PhD Advisor</a>.
+        </p>
+        <p class="hero-bio" style="margin-top: 16px;">
+          My research focuses on <strong>principled approaches to understanding real-world AI</strong>,
+          combining insights from optimization, statistics, and economics to design trustworthy AI systems.
+        </p>
+
+        <div class="awards-strip">
+          <span class="award-tag">Award One</span>
+          <span class="award-tag">Fellowship Name</span>
+          <span class="award-tag">Best Thesis Prize</span>
+          <span class="award-tag">Foundation Prize</span>
+        </div>
+
+        <div class="hero-links">
+          <a href="#" class="hero-link primary">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M16 13H8"/><path d="M16 17H8"/><path d="M10 9H8"/></svg>
+            Resume / CV
+          </a>
+          <a href="#" class="hero-link">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg>
+            GitHub
+          </a>
+          <a href="#" class="hero-link">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><path d="m22 6-10 7L2 6"/></svg>
+            Email
+          </a>
+          <a href="#" class="hero-link">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.372 0 0 5.373 0 12s5.372 12 12 12 12-5.373 12-12S18.628 0 12 0zm6.804 8.138c.226 5.003-3.503 10.582-10.105 10.582-2.008 0-3.877-.588-5.453-1.597.275.033.555.05.838.05 1.666 0 3.199-.569 4.415-1.523-1.555-.029-2.868-1.057-3.32-2.47.543.103 1.07.077 1.563-.063-1.7-.342-2.835-1.87-2.795-3.522.505.28 1.082.449 1.696.467-1.575-1.053-2.02-3.14-1.088-4.748 1.843 2.26 4.598 3.747 7.705 3.902-.546-2.342 1.265-4.6 3.682-4.6 1.087 0 2.07.46 2.76 1.193.862-.17 1.672-.484 2.403-.917-.282.883-.882 1.624-1.665 2.092.766-.091 1.496-.296 2.175-.599-.508.758-1.15 1.422-1.89 1.953z"/></svg>
+            Scholar
+          </a>
+        </div>
+      </div>
+
+      <div class="hero-photo-wrap">
+        <div class="hero-photo">
+          <div class="photo-placeholder">
+            <svg width="64" height="64" fill="none" stroke="currentColor" stroke-width="1" viewBox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+              <circle cx="12" cy="7" r="4"/>
+            </svg>
+            <span>Your photo here</span>
+            <span style="font-size: 12px; color: var(--text-muted);">Replace with &lt;img&gt; tag</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <hr class="divider">
+
+  <!-- ═══════ RESEARCH ═══════ -->
+  <section id="research" class="reveal">
+    <div class="section-header">
+      <div class="section-label">What I Work On</div>
+      <h2 class="section-title">Research Interests</h2>
+    </div>
+    <div class="research-grid">
+      <div class="research-card">
+        <span class="card-number">01</span>
+        <h3>AI Safety &amp; Privacy</h3>
+        <p>What does it mean for complex AI systems to be safe or private? How can we audit, measure, and improve it? How can we measure and improve LLM behavior?</p>
+      </div>
+      <div class="research-card">
+        <span class="card-number">02</span>
+        <h3>Role of Data in AI</h3>
+        <p>What makes training data "good" and how do we define "good"? What makes for good benchmarks given we are far from the simple i.i.d. splits ML used to assume?</p>
+      </div>
+      <div class="research-card">
+        <span class="card-number">03</span>
+        <h3>AI Ecosystems</h3>
+        <p>How can we understand and shape the complex "machine behavior" arising from interacting humans and AI agents? How can we ensure the health of such ecosystems?</p>
+      </div>
+      <div class="research-card">
+        <span class="card-number">04</span>
+        <h3>AI for Health</h3>
+        <p>Can we translate these solutions to address bottlenecks for deploying AI in high-stakes healthcare settings?</p>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════ PUBLICATIONS ═══════ -->
+  <section id="publications" class="reveal">
+    <div class="section-header">
+      <div class="section-label">Selected Work</div>
+      <h2 class="section-title">Publications</h2>
+      <p style="color: var(--text-secondary); margin-top: 16px;">
+        * indicates equal contribution. See <a href="#">Google Scholar</a> for the full list.
+      </p>
+    </div>
+
+    <h3 class="pub-year">2026</h3>
+    <div class="pub-item">
+      <div class="pub-title">Paper Title: A Novel Approach to Something Important</div>
+      <div class="pub-authors">Author One*, Author Two*, <strong>Your Name</strong></div>
+      <div class="pub-venue">ICLR 2026</div>
+      <div class="pub-links">
+        <a href="#">Paper</a>
+        <a href="#">Code</a>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-title">Another Paper About Interesting Research Topic</div>
+      <div class="pub-authors"><strong>Your Name</strong>, Collaborator A, Collaborator B</div>
+      <div class="pub-venue">ICML 2026</div>
+      <div class="pub-links">
+        <a href="#">Paper</a>
+        <a href="#">Slides</a>
+        <a href="#">Talk</a>
+      </div>
+    </div>
+
+    <h3 class="pub-year">2025</h3>
+    <div class="pub-item">
+      <div class="pub-title">Research on Privacy-Preserving Methods for Federated Systems</div>
+      <div class="pub-authors"><strong>Your Name</strong>, Author Three, Author Four</div>
+      <div class="pub-venue">NeurIPS 2025</div>
+      <div class="pub-links">
+        <a href="#">Paper</a>
+        <a href="#">Code</a>
+      </div>
+    </div>
+    <div class="pub-item">
+      <div class="pub-title">Efficient Algorithms for Distributed Optimization</div>
+      <div class="pub-authors">Author Five, <strong>Your Name</strong></div>
+      <div class="pub-venue">TMLR 2025</div>
+      <div class="pub-links">
+        <a href="#">Paper</a>
+      </div>
+    </div>
+
+    <h3 class="pub-year">2024</h3>
+    <div class="pub-item">
+      <div class="pub-title">Mechanisms for Incentive-Compatible Data Sharing</div>
+      <div class="pub-authors"><strong>Your Name</strong>*, Collaborator C*, Collaborator D</div>
+      <div class="pub-venue">ICML 2024 &mdash; <span style="color: var(--accent);">Spotlight</span></div>
+      <div class="pub-links">
+        <a href="#">Paper</a>
+        <a href="#">Talk</a>
+        <a href="#">Code</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════ TEACHING ═══════ -->
+  <section id="teaching" class="reveal">
+    <div class="section-header">
+      <div class="section-label">Courses</div>
+      <h2 class="section-title">Teaching</h2>
+    </div>
+    <div class="teaching-list">
+      <a href="#" class="teaching-item">
+        <span class="teaching-semester">Fall 2025</span>
+        <span class="teaching-name">CSCI 699 &mdash; Privacy Preserving Machine Learning</span>
+        <span class="teaching-arrow">&rarr;</span>
+      </a>
+      <a href="#" class="teaching-item">
+        <span class="teaching-semester">Spring 2025</span>
+        <span class="teaching-name">CSCI 599 &mdash; Optimization for Machine Learning</span>
+        <span class="teaching-arrow">&rarr;</span>
+      </a>
+      <a href="#" class="teaching-item">
+        <span class="teaching-semester">Fall 2024</span>
+        <span class="teaching-name">CSCI 699 &mdash; Privacy Preserving Machine Learning</span>
+        <span class="teaching-arrow">&rarr;</span>
+      </a>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════ STUDENTS ═══════ -->
+  <section id="students" class="reveal">
+    <div class="section-header">
+      <div class="section-label">People</div>
+      <h2 class="section-title">Students</h2>
+    </div>
+
+    <div class="students-group">
+      <div class="students-group-title">PhD Students</div>
+      <div class="students-grid">
+        <a href="#" class="student-item">
+          <div class="student-name">Student Name A</div>
+          <div class="student-note">co-advised with Prof. X</div>
+        </a>
+        <a href="#" class="student-item">
+          <div class="student-name">Student Name B</div>
+        </a>
+        <a href="#" class="student-item">
+          <div class="student-name">Student Name C</div>
+          <div class="student-note">co-advised with Prof. Y</div>
+        </a>
+        <a href="#" class="student-item">
+          <div class="student-name">Student Name D</div>
+        </a>
+      </div>
+    </div>
+
+    <div class="students-group">
+      <div class="students-group-title">Masters &amp; Undergrads</div>
+      <div class="students-grid">
+        <a href="#" class="student-item">
+          <div class="student-name">Student Name E</div>
+        </a>
+        <a href="#" class="student-item">
+          <div class="student-name">Student Name F</div>
+          <div class="student-note">co-advised with Prof. Z</div>
+        </a>
+        <a href="#" class="student-item">
+          <div class="student-name">Student Name G</div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider">
+
+  <!-- ═══════ NEWS ═══════ -->
+  <section id="news" class="reveal">
+    <div class="section-header">
+      <div class="section-label">Updates</div>
+      <h2 class="section-title">News</h2>
+    </div>
+    <div class="news-list">
+      <div class="news-item">
+        <span class="news-date">Jan 2026</span>
+        <p class="news-content">Appointed as visiting researcher at <a href="#">Research Institute</a>. <strong>Reach out if you're in the area and want to chat!</strong></p>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Nov 2025</span>
+        <p class="news-content">Gave an invited talk at the <a href="#">Conference on Open Science</a> in Washington DC.</p>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Sep 2025</span>
+        <p class="news-content">Serving as an area chair at <a href="#">ICLR 2026</a>.</p>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Jun 2025</span>
+        <p class="news-content">Excited to be part of this workshop on <a href="#">Incentives in Data Sharing</a>. We are now accepting submissions and registrations!</p>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Jan 2025</span>
+        <p class="news-content">Named as a <strong>Fellowship Recipient</strong> — thank you for the support!</p>
+      </div>
+      <div class="news-item">
+        <span class="news-date">Dec 2024</span>
+        <p class="news-content">Received a joint appointment with the <a href="#">Department of ECE</a>. You can now apply to PhD programs in both CS and ECE.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════ FOOTER ═══════ -->
+  <footer>
+    <div class="footer-inner">
+      <span class="footer-text">&copy; 2026 Your Name. Built for GitHub Pages.</span>
+      <div class="footer-links">
+        <a href="#">Scholar</a>
+        <a href="#">GitHub</a>
+        <a href="#">Email</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // Mobile nav toggle
+    const toggle = document.getElementById('navToggle');
+    const links = document.getElementById('navLinks');
+    toggle.addEventListener('click', () => links.classList.toggle('open'));
+
+    // Close nav on link click (mobile)
+    links.querySelectorAll('a').forEach(a => {
+      a.addEventListener('click', () => links.classList.remove('open'));
+    });
+
+    // Scroll reveal
+    const reveals = document.querySelectorAll('.reveal');
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+          observer.unobserve(entry.target);
+        }
+      });
+    }, { threshold: 0.1 });
+    reveals.forEach(el => observer.observe(el));
+  </script>
+
+</body>
+</html>
